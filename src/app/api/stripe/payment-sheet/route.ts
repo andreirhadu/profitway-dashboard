@@ -5,7 +5,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 export async function POST(request: Request) {  
   try {
-    const { userId, amount_today, arrivalDate, departureDate, apartmentId, arrivalTime, departureTime, phone, adults, children, price, country } = await request.json()
+    const { userId, amount_today, arrivalDate, departureDate, apartmentId, arrivalTime, departureTime, phone, adults, children, price, country, notice } = await request.json()
     var customer = await stripe.customers.retrieve(userId)
     const user = await db.collection('users').findOne({ _id: ObjectId.createFromHexString(userId) })
     
@@ -43,6 +43,7 @@ export async function POST(request: Request) {
           prepaymentStatus: amount_today == price ? undefined : 1,
           prepayment: amount_today == price ? undefined : amount_today,
           country: country,
+          notice: notice,
           address: {
             street: '',
             postalCode: '',
