@@ -11,6 +11,7 @@ export async function POST(request: Request) {
         const paymentIntent = event.data.object
 
         if ( paymentIntent.metadata ) {
+          console.log(paymentIntent.metadata)
           try {
             await axios.post('https://login.smoobu.com/api/reservations', 
               {
