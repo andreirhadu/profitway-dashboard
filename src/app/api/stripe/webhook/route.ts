@@ -45,6 +45,7 @@ export async function POST(request: Request) {
     }
   } catch (e: any) {
     if (e.response && e.response.data) {
+      console.log(e.response.data)
       return new Response(e.response.data.validation_messages, { status: 400 })
     }
     return new Response(e.message, { status: 400 })
