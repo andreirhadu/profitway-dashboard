@@ -20,7 +20,8 @@ export async function POST(request: Request) {
               {
                 headers: {
                   'Api-Key': process.env.SMOOBU_API_KEY,
-                  'cache-control': 'no-cache'
+                  'cache-control': 'no-cache',
+                  'Content-Type': 'application/json'
                 }
               } 
             )
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
     }
   } catch (e: any) {
     if (e.response && e.response.data) {
-      return new Response(e.response.data, { status: 400 })
+      return new Response(e.response.data[0], { status: 400 })
     }
     return new Response(e.message, { status: 400 })
   }
