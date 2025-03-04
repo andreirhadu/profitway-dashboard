@@ -6,14 +6,23 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 export async function POST(request: Request) {  
   try {
     const { userId, amount_today, arrivalDate, departureDate, apartmentId, arrivalTime, departureTime, phone, adults, children, price, country, notice } = await request.json()
-    var customer = await stripe.customers.retrieve(userId)
     const user = await db.collection('users').findOne({ _id: ObjectId.createFromHexString(userId) })
+    var customer = null
+
+    if ( user && user.stripeId ) {
+      customer = await stripe.customers.retrieve(user.stripeId)
+    }
     
     if (!customer) {
       customer = await stripe.customers.create({
         email: user!.email, 
         name: user!.firstName + ' ' + user!.lastName
       })
+
+      await db.collection('users').updateOne(
+        { _id: ObjectId.createFromHexString(userId) },
+        { $set: { stripeId: customer.id } }
+      )
     }
 
     const ephemeralKey = await stripe.ephemeralKeys.create(

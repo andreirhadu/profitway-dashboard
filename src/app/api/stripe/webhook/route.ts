@@ -13,7 +13,7 @@ export async function POST(request: Request) {
           try {
             const reservation = JSON.parse(paymentIntent.metadata.reservation)
 
-            await axios.post('https://login.smoobu.com/booking/createBooking', 
+            await axios.post('https://login.smoobu.com/api/reservations', 
               {
                 ...reservation
               },
@@ -31,7 +31,6 @@ export async function POST(request: Request) {
             })
       
           } catch (e: any) {
-            console.log(e)
             throw e
           }
         }

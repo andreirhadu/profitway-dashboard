@@ -37,10 +37,14 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         'cache-control': 'no-cache'
       }
     })
-
-    return Response.json(response.data.prices[String(id)])
+    
+    if (response.data.prices[String(id)]) {
+      return Response.json(response.data.prices[String(id)])
+    } else {
+      return new Response('no-prices-available', { status: 400 })
+    }
   } catch (e: any) {
-    console.log(e.response.data)
-    return new Response(e.response.data, { status: 400 })
+    console.log(e)
+    return new Response(e.message, { status: 400 })
   }
 }
