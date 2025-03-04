@@ -48,8 +48,8 @@ export async function POST(request: Request) {
         children,
         price: price,
         priceStatus: amount_today == price ? 1 : 0,
-        prepaymentStatus: amount_today == price ? undefined : 1,
-        prepayment: amount_today == price ? undefined : amount_today,
+        prepaymentStatus: amount_today == price ? 0 : 1,
+        prepayment: amount_today == price ? 0 : amount_today,
         country: country,
         notice: notice,
         address: JSON.stringify({
