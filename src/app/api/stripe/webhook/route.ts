@@ -1,4 +1,3 @@
-import { metadata } from "@/app/layout"
 import { db } from "@/lib/db"
 import axios from "axios"
 
@@ -11,24 +10,10 @@ export async function POST(request: Request) {
         const paymentIntent = event.data.object
 
         if ( paymentIntent.metadata ) {
-          console.log({
-            ...metadata,
-            apartmentId: Number(paymentIntent.metadata.apartmentId),
-            channelId: Number(paymentIntent.metadata.channelId),
-            adults: Number(paymentIntent.metadata.adults),
-            children: Number(paymentIntent.metadata.children),
-            price: Number(paymentIntent.metadata.price),
-            prepayment: paymentIntent.metadata.prepayment ? Number(paymentIntent.metadata.prepayment) : null,
-            prepaymentStatus: paymentIntent.metadata.prepaymentStatus ? Number(paymentIntent.metadata.prepaymentStatus) : null,
-            priceStatus: Number(paymentIntent.metadata.priceStatus),
-            departureTime: '11:00',
-            address: JSON.parse(paymentIntent.metadata.address),
-            priceElements: JSON.parse(paymentIntent.metadata.priceElements),
-          })
           try {
             await axios.post('https://login.smoobu.com/api/reservations', 
               {
-                ...metadata,
+                ...paymentIntent.metadata,
                 apartmentId: Number(paymentIntent.metadata.apartmentId),
                 channelId: Number(paymentIntent.metadata.channelId),
                 adults: Number(paymentIntent.metadata.adults),
@@ -37,7 +22,6 @@ export async function POST(request: Request) {
                 prepayment: paymentIntent.metadata.prepayment ? Number(paymentIntent.metadata.prepayment) : null,
                 prepaymentStatus: paymentIntent.metadata.prepaymentStatus ? Number(paymentIntent.metadata.prepaymentStatus) : null,
                 priceStatus: Number(paymentIntent.metadata.priceStatus),
-                departureTime: '11:00',
                 address: JSON.parse(paymentIntent.metadata.address),
                 priceElements: JSON.parse(paymentIntent.metadata.priceElements),
               },
@@ -51,7 +35,7 @@ export async function POST(request: Request) {
             )
 
             await db.collection('reservations').insertOne({
-              ...metadata,
+              ...paymentIntent.metadata,
               apartmentId: Number(paymentIntent.metadata.apartmentId),
               channelId: Number(paymentIntent.metadata.channelId),
               adults: Number(paymentIntent.metadata.adults),
