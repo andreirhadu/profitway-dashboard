@@ -15,6 +15,7 @@ export async function POST(request: Request) {
             await axios.post('https://login.smoobu.com/api/reservations', 
               {
                 ...metadata,
+                apartmentId: Number(paymentIntent.metadata.apartmentId),
                 channelId: Number(paymentIntent.metadata.channelId),
                 adults: Number(paymentIntent.metadata.adults),
                 children: Number(paymentIntent.metadata.children),
@@ -36,6 +37,7 @@ export async function POST(request: Request) {
 
             await db.collection('reservations').insertOne({
               ...metadata,
+              apartmentId: Number(paymentIntent.metadata.apartmentId),
               channelId: Number(paymentIntent.metadata.channelId),
               adults: Number(paymentIntent.metadata.adults),
               children: Number(paymentIntent.metadata.children),
