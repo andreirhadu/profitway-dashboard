@@ -52,12 +52,13 @@ export async function POST(request: Request) {
         prepaymentStatus: amount_today == price ? 0 : 1,
         prepayment: amount_today == price ? 0 : amount_today,
         country: country,
-        notice: notice,
+        notice: `${notice} - Rezervat prin aplicatia mobila.`,
         address: JSON.stringify({
           street: '',
           postalCode: '',
           location: '',
         }),
+        paymentStatus: amount_today == price ? 'paid' : 'partial',
         priceElements: JSON.stringify([
           {
             "type": "basePrice",
