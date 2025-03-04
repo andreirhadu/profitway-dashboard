@@ -1,3 +1,4 @@
+import { metadata } from "@/app/layout"
 import { db } from "@/lib/db"
 import axios from "axios"
 
@@ -9,13 +10,13 @@ export async function POST(request: Request) {
       case 'payment_intent.succeeded':
         const paymentIntent = event.data.object
 
-        if ( paymentIntent.metadata && paymentIntent.metadata.reservation ) {
+        if ( paymentIntent.metadata ) {
           try {
-            const reservation = JSON.parse(paymentIntent.metadata.reservation)
-            console.log(reservation)
             await axios.post('https://login.smoobu.com/api/reservations', 
               {
-                ...reservation
+                ...metadata,
+                address: JSON.parse(paymentIntent.metadata.address),
+                priceElements: JSON.parse(paymentIntent.metadata.priceElements),
               },
               {
                 headers: {
@@ -27,7 +28,9 @@ export async function POST(request: Request) {
             )
 
             await db.collection('reservations').insertOne({
-              ...reservation,
+              ...metadata,
+              address: JSON.parse(paymentIntent.metadata.address),
+              priceElements: JSON.parse(paymentIntent.metadata.priceElements),
               paymentIntentId: paymentIntent.id
             })
       
@@ -42,8 +45,7 @@ export async function POST(request: Request) {
     }
   } catch (e: any) {
     if (e.response && e.response.data) {
-      console.log(e.response.data)
-      return new Response(e.response.data[0], { status: 400 })
+      return new Response(e.response.data.validation_messages, { status: 400 })
     }
     return new Response(e.message, { status: 400 })
   }

@@ -34,41 +34,39 @@ export async function POST(request: Request) {
       amount: amount_today*100,
       currency: 'ron',
       metadata: {
-        reservation: JSON.stringify({
-          arrivalDate,
-          departureDate,
-          channelId: 36848,
-          apartmentId,
-          arrivalTime: arrivalTime ? arrivalTime : '11:00',
-          departureTime: departureTime ? departureTime : null,
-          firstName: user!.firstName,
-          lastName: user!.lastName,
-          email: user!.email,
-          phone,
-          adults,
-          children,
-          price: price,
-          priceStatus: amount_today == price ? 1 : 0,
-          prepaymentStatus: amount_today == price ? undefined : 1,
-          prepayment: amount_today == price ? undefined : amount_today,
-          country: country,
-          notice: notice,
-          address: {
-            street: '',
-            postalCode: '',
-            location: '',
+        arrivalDate,
+        departureDate,
+        channelId: 36848,
+        apartmentId,
+        arrivalTime: arrivalTime ? arrivalTime : '11:00',
+        departureTime: departureTime ? departureTime : null,
+        firstName: user!.firstName,
+        lastName: user!.lastName,
+        email: user!.email,
+        phone,
+        adults,
+        children,
+        price: price,
+        priceStatus: amount_today == price ? 1 : 0,
+        prepaymentStatus: amount_today == price ? undefined : 1,
+        prepayment: amount_today == price ? undefined : amount_today,
+        country: country,
+        notice: notice,
+        address: JSON.stringify({
+          street: '',
+          postalCode: '',
+          location: '',
+        }),
+        priceElements: JSON.stringify([
+          {
+            "type": "basePrice",
+            "name": "Base price",
+            "amount": price,
+            "quantity": null,
+            "tax": null,
+            "currencyCode": "RON",
           },
-          priceElements: [
-            {
-              "type": "basePrice",
-              "name": "Base price",
-              "amount": price,
-              "quantity": null,
-              "tax": null,
-              "currencyCode": "RON",
-            },
-          ]
-        })
+        ])
       }
     })
   
