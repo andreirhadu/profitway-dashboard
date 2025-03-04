@@ -24,6 +24,7 @@ export async function POST(request: Request) {
                 prepayment: paymentIntent.metadata.prepayment ? Number(paymentIntent.metadata.prepayment) : null,
                 prepaymentStatus: paymentIntent.metadata.prepaymentStatus ? Number(paymentIntent.metadata.prepaymentStatus) : null,
                 priceStatus: Number(paymentIntent.metadata.priceStatus),
+                departureTime: '11:00',
                 address: JSON.parse(paymentIntent.metadata.address),
                 priceElements: JSON.parse(paymentIntent.metadata.priceElements),
               },
