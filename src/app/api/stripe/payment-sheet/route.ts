@@ -39,7 +39,7 @@ export async function POST(request: Request) {
         channelId: 36848,
         apartmentId,
         arrivalTime: arrivalTime ? arrivalTime : '11:00',
-        departureTime: departureTime ? departureTime : null,
+        departureTime: departureTime ? departureTime : '11:00',
         firstName: user!.firstName,
         lastName: user!.lastName,
         email: user!.email,

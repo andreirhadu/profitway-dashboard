@@ -15,6 +15,13 @@ export async function POST(request: Request) {
             await axios.post('https://login.smoobu.com/api/reservations', 
               {
                 ...metadata,
+                channelId: Number(paymentIntent.metadata.channelId),
+                adults: Number(paymentIntent.metadata.adults),
+                children: Number(paymentIntent.metadata.children),
+                price: Number(paymentIntent.metadata.price),
+                prepayment: paymentIntent.metadata.prepayment ? Number(paymentIntent.metadata.prepayment) : undefined,
+                prepaymentStatus: paymentIntent.metadata.prepaymentStatus ? Number(paymentIntent.metadata.prepaymentStatus) : undefined,
+                priceStatus: Number(paymentIntent.metadata.priceStatus),
                 address: JSON.parse(paymentIntent.metadata.address),
                 priceElements: JSON.parse(paymentIntent.metadata.priceElements),
               },
@@ -29,6 +36,13 @@ export async function POST(request: Request) {
 
             await db.collection('reservations').insertOne({
               ...metadata,
+              channelId: Number(paymentIntent.metadata.channelId),
+              adults: Number(paymentIntent.metadata.adults),
+              children: Number(paymentIntent.metadata.children),
+              price: Number(paymentIntent.metadata.price),
+              prepayment: paymentIntent.metadata.prepayment ? Number(paymentIntent.metadata.prepayment) : undefined,
+              prepaymentStatus: paymentIntent.metadata.prepaymentStatus ? Number(paymentIntent.metadata.prepaymentStatus) : undefined,
+              priceStatus: Number(paymentIntent.metadata.priceStatus),
               address: JSON.parse(paymentIntent.metadata.address),
               priceElements: JSON.parse(paymentIntent.metadata.priceElements),
               paymentIntentId: paymentIntent.id
