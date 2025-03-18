@@ -26,11 +26,9 @@ if (process.env.NODE_ENV === "development") {
     globalWithMongo._mongoClient = new MongoClient(uri, options)
   }
   client = globalWithMongo._mongoClient
-  client.connect()
 } else {
   // In production mode, it's best to not use a global variable.
   client = new MongoClient(uri, options)
-  client.connect()
 }
  
 // Export a module-scoped MongoClient. By doing this in a

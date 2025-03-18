@@ -4,7 +4,7 @@ import { ObjectId } from 'mongodb'
 
 export async function GET(request: Request) {
   const bearer = request.headers.get('Authorization')
-  
+
   if (!bearer) {
     return new Response('Token is required.', { status: 401 })
   }

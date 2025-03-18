@@ -11,7 +11,6 @@ export async function POST(request: Request) {
 
     if ( user && user.stripeId ) {
       customer = await stripe.customers.retrieve(user.stripeId)
-      console.log(customer)
     }
     
     if (!customer) {
