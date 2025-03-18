@@ -3,9 +3,13 @@ import { db } from "@/lib/db"
 export async function POST(request: Request) {
   const { action, data } = await request.json()
 
-  console.log(data, action)
-
   try {
+    const reservation = await db.collection('reservations').findOne({ _id: data.id })
+    
+    if ( !reservation ) {
+      return Response.json({ message: 'Reservation not found.' }, { status: 200 })
+    }
+
     if ( action == 'cancelReservation' ) {
       await db.collection('reservations').updateOne({ _id: data.id }, { $set: { status: 'cancelled' } })
     } else if ( action == 'updateReservation' ) {
