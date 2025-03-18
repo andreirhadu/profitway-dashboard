@@ -51,6 +51,8 @@ export async function POST(request: Request) {
 
     let user = await usersCollection.findOne({ email })
 
+    var authToken
+
     if (user) {
       if (user.provider !== "apple") {
         if (user.provider === "credentials") {
@@ -59,18 +61,19 @@ export async function POST(request: Request) {
           return new Response("wrong-provider", { status: 401 })
         }
       }
+
+      authToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, { expiresIn: "30d" })
     } else {
-      user = {
+      const { insertedId } = await usersCollection.insertOne({
         firstName: firstName || "First",
         lastName: lastName || "Last",
         email,
         provider: "apple",
-        appleId,
-      }
-      await usersCollection.insertOne(user)
-    }
+        appleId
+      })
 
-    const authToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, { expiresIn: "30d" })
+      authToken = jwt.sign({ userId: insertedId }, process.env.JWT_SECRET!, { expiresIn: "30d" })
+    }
 
     return Response.json({ token: authToken, user })
   } catch (error) {
