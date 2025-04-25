@@ -10,6 +10,7 @@ const page = async () => {
   } catch (e: any) {
     console.log(e)
   }
+  
   return (
     <Dashboard 
       numberOfReservations={numberOfReservations}

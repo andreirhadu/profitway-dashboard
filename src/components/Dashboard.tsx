@@ -44,7 +44,7 @@ const Dashboard = ({ numberOfReservations }: Props) => {
         </button>
 
         { numberOfReservations &&
-          <p className='font-bold mb-4'>Număr de rezervări din aplicația mobilă: {numberOfReservations}</p>
+          <p className='font-bold mb-4'>Număr de rezervări prin aplicația mobilă: {numberOfReservations}</p>
         }
 
         <h3 className='font-bold text-xl mb-12'>Trimite notificări</h3>
