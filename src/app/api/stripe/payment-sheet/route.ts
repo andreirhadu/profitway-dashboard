@@ -1,4 +1,3 @@
-import { metadata } from "@/app/layout"
 import { db } from "@/lib/db"
 import { ObjectId } from "mongodb"
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)

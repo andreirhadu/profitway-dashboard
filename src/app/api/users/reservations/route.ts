@@ -1,6 +1,5 @@
 import { db } from '@/lib/db'
 import axios from 'axios'
-import { console } from 'inspector'
 import jwt from 'jsonwebtoken'
 import { ObjectId } from 'mongodb'
 
@@ -20,7 +19,7 @@ export async function GET(request: Request) {
     if (!user) {
       return new Response('Invalid token.', { status: 401 })
     }
-
+    
     const reservations = await db.collection('reservations').find({ userId: String(user._id) }).toArray()
     return Response.json({ reservations })
   } catch (error) {
@@ -91,7 +90,8 @@ export async function POST(request: Request) {
 
     return Response.json({ reservation: newReservation })
   } catch (e: any) {
-    if ( e.response && e.response.error ) {
+    console.log(e.response.data)
+    if ( e.response && e.response.data && e.response.data.title == 'Entity not found' ) {
       return new Response('id-not-found', { status: 404 })
     }
 

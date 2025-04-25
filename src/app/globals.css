@@ -1,21 +1,165 @@
-@tailwind base;
-@tailwind components;
 @tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+  name: "mytheme";
+  default: true; /* set as default */
+  prefersdark: false; /* set as default dark mode (prefers-color-scheme:dark) */
+  color-scheme: light; /* color of browser-provided UI */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-base-100: #fff;
+  --color-base-200: #f7f8fc;
+  --color-base-300: #e1e2e5;
+  --color-base-content: #2f313c;
+  --color-primary: #393939;
+  --color-primary-content: #fff;
+  --color-secondary: #123f55;
+  --color-secondary-content: #fff;
+  --color-accent: #e1e2e5;
+  --color-neutral: "#2f313c";
+  --color-info: #3abff8;
+  --color-info-content: #5c5b62;
+
+  /* border radius */
+  --radius-selector: 2rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+
+  /* base sizes */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  /* border size */
+  --border: 1px;
+
+  /* effects */
+  --depth: 1;
+  --noise: 0;
+};
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-Thin.otf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-ThinItalic.otf") format("truetype");
+  font-weight: 100;
+  font-style: italic;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-ExtraLight.otf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-ExtraLightItalic.otf") format("truetype");
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-Light.otf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-LightItalic.otf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-Regular.otf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-Italic.otf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-Medium.otf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-MediumItalic.otf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-SemiBold.otf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-SemiBoldItalic.otf") format("truetype");
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-Bold.otf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-BoldItalic.otf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-ExtraBold.otf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-ExtraBoldItalic.otf") format("truetype");
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "MazzardH";
+  src: url("../../public/fonts/MazzardH-BlackItalic.otf") format("truetype");
+  font-weight: 900;
+  font-style: italic;
+}
+
+* {
+  font-family: "MazzardH", sans-serif;
+}
+
+.input {
+  @apply p-4 focus:ring-gray-300
 }

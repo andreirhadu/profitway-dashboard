@@ -1,56 +1,51 @@
-import NextAuth, { Session, User } from "next-auth"
-import bcrypt from "bcryptjs"
+import NextAuth, { User } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import { JWT } from "next-auth/jwt"
-
-const users = [
-  { id: "1", email: "test@example.com", password: bcrypt.hashSync("password123", 10) },
-]
-
-interface ExtendedToken extends JWT {
-  user?: User
-  accessToken?: string
-}
-
-interface ExtendedSession extends Session {
-  user?: User
-  accessToken?: string
-}
+import bcrypt from 'bcryptjs'
+import { getUserFromDb } from "./services/getUserFromDb"
  
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
-    Credentials({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "text", placeholder: "test@example.com" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        const user = users.find(user => user.email === credentials.email)
-        if (!user || !bcrypt.compareSync(credentials.password as string, user.password)) {
-          throw new Error("Invalid credentials")
-        }
-        return { id: user.id, email: user.email }
-      },
-    }),
-  ],
-  callbacks: {
-    async jwt({ token, user, account }) {
-      const extendedToken = token as ExtendedToken
-      if (user) extendedToken.user = user
-      if (account?.access_token && typeof account.access_token === "string") {
-        extendedToken.accessToken = account.access_token
-      }
-      return extendedToken
-    },
-    async session({ session, token }) {
-      const extendedSession = session as ExtendedSession
-      if (token.user) extendedSession.user = token.user as User
-      if (typeof token.accessToken === "string") {
-        extendedSession.accessToken = token.accessToken
-      }
-      return extendedSession
-    }
+  session: {
+    strategy: "jwt"
   },
   secret: process.env.AUTH_SECRET,
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) { // User is available during sign-in
+        token.id = user.id
+      }
+      return token
+    },
+    session({ session, token }: any) {
+      session.user.id = token._id
+      return session
+    },
+  },
+  providers: [
+    Credentials({
+      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
+      // e.g. domain, username, password, 2FA token, etc.
+      credentials: {
+        email: {},
+        password: {},
+      },
+      authorize: async (credentials) => {
+        let user = null
+        // logic to verify if the user exists
+        user = await getUserFromDb(credentials.email as string)
+
+        if (!user) {
+          // No user found, so this is their first attempt to login
+          // Optionally, this is also the place you could do a user registration
+          return null
+        }
+        
+        // logic to verify if password is correct
+        if (!bcrypt.compareSync(credentials.password as string, user.pwHash)) {
+          return null
+        }
+        // return user object with their profile data
+        return user as User
+      },
+    }),
+  ]
 })

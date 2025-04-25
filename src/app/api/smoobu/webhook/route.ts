@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     }
 
     if ( action == 'cancelReservation' ) {
-      await db.collection('reservations').updateOne({ _id: data.id }, { $set: { status: 'cancelled' } })
+      await db.collection('reservations').updateOne({ _id: data.id }, { $set: { status: 'canceled' } })
     } else if ( action == 'updateReservation' ) {
       await db.collection('reservations').updateOne({ _id: data.id }, { $set: {
         createdAt: new Date(data['created-at']),
