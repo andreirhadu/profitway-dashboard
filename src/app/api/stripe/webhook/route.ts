@@ -48,7 +48,8 @@ export async function POST(request: Request) {
               priceStatus: Number(paymentIntent.metadata.priceStatus),
               address: JSON.parse(paymentIntent.metadata.address),
               priceElements: JSON.parse(paymentIntent.metadata.priceElements),
-              paymentIntentId: paymentIntent.id
+              paymentIntentId: paymentIntent.id,
+              source: 'mobile-app'
             })
       
           } catch (e: any) {

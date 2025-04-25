@@ -19,6 +19,7 @@
   --color-neutral: "#2f313c";
   --color-info: #3abff8;
   --color-info-content: #5c5b62;
+  --color-error-content: #fff;
 
   /* border radius */
   --radius-selector: 2rem;
