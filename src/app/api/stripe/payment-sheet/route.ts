@@ -30,9 +30,9 @@ export async function POST(request: Request) {
     )
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 200, //amount_today*100,
+      amount: amount_today*100,
       currency: 'ron',
-      description: `Rezervare - ${user!.firstName} ${user!.lastName}`,
+      description: `Rezervare ${amount_today == price ? 'plată totală' : 'plată parțială'} - ${user!.firstName} ${user!.lastName}`,
       metadata: {
         userId: userId,
         arrivalDate,
