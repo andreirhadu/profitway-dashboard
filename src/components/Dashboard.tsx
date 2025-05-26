@@ -42,8 +42,8 @@ const Dashboard = ({ numberOfReservations }: Props) => {
         >
           Ieși din cont
         </button>
-
-        { numberOfReservations &&
+        
+        { numberOfReservations || numberOfReservations == 0 &&
           <p className='font-bold mb-4'>Număr de rezervări prin aplicația mobilă: {numberOfReservations}</p>
         }
 
