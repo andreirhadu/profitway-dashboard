@@ -9,7 +9,7 @@ export async function POST(request: Request) {
       case 'payment_intent.succeeded':
         const paymentIntent = event.data.object
 
-        if ( paymentIntent.metadata ) {
+        if ( paymentIntent?.metadata?.apartmentId ) {
           try {
             const response = await axios.post('https://login.smoobu.com/api/reservations', 
               {
