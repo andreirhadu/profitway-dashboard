@@ -12,7 +12,7 @@ const Logo = ({ size='small' }: Props) => {
       { size == 'small' ?
         <div className='flex flex-row items-center gap-x-2 w-fit'>
           <Image 
-            src='/cozystay-logo.png'
+            src='/logo.png'
             width={64}
             height={64}
             alt='logo'
@@ -22,11 +22,11 @@ const Logo = ({ size='small' }: Props) => {
         </div> : 
         <div className='flex flex-row items-center gap-x-2 w-fit'>
           <Image 
-            src='/cozystay-logo.png'
-            width={256}
-            height={150}
+            src='/logo.png'
+            width={250}
+            height={250}
             alt='logo'
-            className='w-48 h-auto'
+            className='w-36 h-auto'
           />
           <p className='font-black mt-1 text-xl'></p>
         </div>

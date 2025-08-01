@@ -34,4 +34,4 @@ if (process.env.NODE_ENV === "development") {
 // Export a module-scoped MongoClient. By doing this in a
 // separate module, the client can be shared across functions.
 export default client
-export const db = client.db('profitway')
+export const db = client.db('Profitway')
