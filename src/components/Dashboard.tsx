@@ -4,11 +4,7 @@ import { signOut } from 'next-auth/react'
 import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 
-type Props = {
-  numberOfReservations: number | null
-}
-
-const Dashboard = ({ numberOfReservations }: Props) => {
+const Dashboard = () => {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [loading, setLoading] = useState(false)
@@ -42,10 +38,6 @@ const Dashboard = ({ numberOfReservations }: Props) => {
         >
           Ieși din cont
         </button>
-        
-        { numberOfReservations || numberOfReservations == 0 &&
-          <p className='font-bold mb-4'>Număr de rezervări prin aplicația mobilă: {numberOfReservations}</p>
-        }
 
         <h3 className='font-bold text-xl mb-12'>Trimite notificări</h3>
 
