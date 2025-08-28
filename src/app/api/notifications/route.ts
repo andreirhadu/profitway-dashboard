@@ -1,6 +1,6 @@
-import { auth } from "@/auth";
-import { db } from "@/lib/db";
-import axios from "axios";
+import { auth } from "@/auth"
+import { db } from "@/lib/db"
+import axios from "axios"
 
 const sendNotification = async (pushToken: string, title: string, body: string) => {
   return axios.post("https://exp.host/--/api/v2/push/send", {
