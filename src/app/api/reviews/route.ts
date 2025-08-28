@@ -2,10 +2,6 @@ import { auth } from "@/auth"
 import { db } from "@/lib/db"
 
 export const GET = auth(async function Post(request) {
-  if ( !request.auth ) {
-    return new Response("Not authenticated", {status: 401})
-  }
-
   try {
     const reviews = await db.collection('reviews').find({}).toArray()
 
